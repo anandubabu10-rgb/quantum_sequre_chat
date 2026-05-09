@@ -14,9 +14,14 @@ from encryption import (
     decrypt_message
 )
 
+from qber_visualizer import (
+    record_qber,
+    show_graph
+)
+
 # CHANGE THIS AFTER DEPLOYMENT
 # SERVER_URL = "http://127.0.0.1:5000"
-SERVER_URL = https://quantum-sequre-chat.onrender.com"
+SERVER_URL = "https://quantum-sequre-chat.onrender.com"
 
 username = input(
     "Enter your username: "
@@ -38,6 +43,7 @@ def generate_key():
     key, qber, attack = quantum_key_distribution()
 
     current_key = key
+    record_qber(qber)
 
     qber_label.config(
         text=f"QBER: {qber}%"
@@ -65,6 +71,7 @@ def simulate_attack():
     enable_attack()
 
     key, qber, attack = quantum_key_distribution()
+    record_qber(qber)
 
     qber_label.config(
         text=f"QBER: {qber}%"
@@ -325,5 +332,13 @@ threading.Thread(
     daemon=True
 ).start()
 
+graph_btn = tk.Button(
+    root,
+    text="Show QBER Graph",
+    command=show_graph,
+    bg="violet"
+)
+
+graph_btn.pack(pady=5)
 
 root.mainloop()
